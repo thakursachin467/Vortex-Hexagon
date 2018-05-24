@@ -1,0 +1,26 @@
+{{#if errors}}
+{{#each errors}}
+<div class="alert alert-danger">
+    {{text}}
+</div>
+{{/each}}
+{{else}}
+
+{{/if}}
+
+{{#if error}}
+<div class="alert alert-danger" role="alert">
+  {{error}}
+</div>
+{{else}}
+
+{{/if}}
+
+
+{{#if error_msg}}
+<div class="alert alert-danger" role="alert">
+  <strong>{{error_msg}}</strong>
+</div>
+{{else}}
+
+{{/if}}

@@ -3,27 +3,54 @@ const exphbs  = require('express-handlebars');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const database= require('./database/connect');
+const pages= require('./routes/pages');
+const bodyParser = require('body-parser')
+const adminpages= require('./routes/admin_pages');
+const path = require('path');
 
 
 
 var app= express();
 var port= process.env.PORT || 3000;
 
+app.use('/assests',express.static(path.join(__dirname,'public')));
 //middlewares start here
+
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
 app.use(session({
   secret: 'keyboard cat',
   resave: true,
-  saveUninitialized: true
+  saveUninitialized: true,
+	cookie : {maxAge:180 * 60  * 1000}
 }))
 
 app.use(cookieParser())
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
 
-app.get('/',(req,res)=>{
-    res.send('server is up');
+// parse application/json
+app.use(bodyParser.json());
+
+app.use(flash());
+
+//global variables
+ app.use(function(req,res,next) {
+
+    res.locals.success_msg= req.flash('success_msg');
+    res.locals.error_msg= req.flash('error_msg');
+    res.locals.error= req.flash('error');
+    res.locals.userid=req.user || null;
+      next();
+
 });
+
+//all routes related to user handled here
+app.use('/',pages)
+//all routes related to admin handled here
+app.use('/admin/pages',adminpages)
+
 
 
 
