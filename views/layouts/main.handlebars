@@ -24,11 +24,11 @@ min-height: 61vh;
   <body>
     <!-- header starts here -->
       {{> _header}}
-
+      {{> _errors}}
+      {{> _sucess}}
       <!--all the main content goes here -->
       <main>
-        {{> errors}}
-        {{> sucess}}
+
         {{{body}}}
       </main>
 

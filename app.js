@@ -6,6 +6,7 @@ const database= require('./database/connect');
 const pages= require('./routes/pages');
 const bodyParser = require('body-parser')
 const adminpages= require('./routes/admin_pages');
+const flash = require('connect-flash');
 const path = require('path');
 
 

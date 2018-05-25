@@ -1,0 +1,28 @@
+<div class="container">
+<h2 class="page-title text-center">Add page</h2>
+
+<a href="/admin/pages" class="btn btn-primary ">Go back to all pages</a>
+
+<br> <br>
+
+<form  action="/admin/pages/add-page" method="post">
+  <div class="form-group">
+    <label for="title">Title</label>
+    <input type="text" name="title" class="form-control" placeholder="Enter Title" value="{{title}}" required>
+
+  </div>
+  <div class="form-group">
+    <label for="slug">Slug</label>
+    <input type="text" name="slug" class="form-control" placeholder="slug" value="{{slug}}" >
+
+  </div>
+  <div class="form-group">
+    <label for="content">Content</label>
+    <textarea type="text" name="content" class="form-control" cols="30" rows="8" placeholder="content" value="{{content}}" required></textarea>
+
+  </div>
+  <div class="d-flex justify-content-center">
+  <button type="submit"  class="btn btn-primary">Submit</button>
+    </div>
+</form>
+</div>
