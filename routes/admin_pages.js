@@ -1,9 +1,13 @@
 const express= require('express');
 const router=express.Router();
 
+// all pages starting with /admin/pages end up here
+
 
 //our page model
 const pages= require('../models/page');
+
+
 //get admin index
 router.get('/',(req,res)=>{
     pages.find({})
@@ -80,9 +84,9 @@ router.post('/add-page',(req,res)=>{
     });
 
 
-  })
+  });
 
-
+//router rearrange page
 router.post('/reorder',(req,res)=>{
   let ids= req.body['id[]'];
   let count=0;
@@ -100,10 +104,53 @@ router.post('/reorder',(req,res)=>{
   }
 });
 
+//edit page
 router.get('/edit/:id',(req,res)=>{
-  
+
+  pages.findOne({slug:req.params.id})
+  .then((page)=>{
+    res.render('admin/edit',{
+      page:page
+    })
+  })
 });
 
+//update the edited page
+router.post('/edit/:slug',(req,res)=>{
+
+  let title= req.body.title;
+  let slug;
+  if(req.body.slug==""){
+    slug= req.body.title.replace(/\s+/g,'-').toLowerCase();
+  }
+  else {
+    slug= req.body.slug.replace(/\s+/g,'-').toLowerCase();
+  }
+  let content= req.body.content;
+      pages.findById(req.body.id)
+      .then((page)=>{
+        console.log(page);
+        page.title= title;
+        page.content= content;
+        page.slug= slug;
+        page.save()
+        .then(()=>{
+          req.flash('success_msg','Page Edited sucessfully')
+          res.redirect('/admin/pages');
+        })
+      })
+      .catch((err)=>{
+        console.log(err);
+      });
+});
+
+
+router.get('/delete/:id',(req,res)=>{
+    pages.findOneAndRemove({_id:req.params.id})
+    .then(()=>{
+      res.redirect('/admin/pages');
+    });
+});
 
 
 
