@@ -8,6 +8,7 @@ const bodyParser = require('body-parser')
 const adminpages= require('./routes/admin_pages');
 const flash = require('connect-flash');
 const path = require('path');
+const {check}= require('./helpers/hbs');
 
 
 
@@ -17,7 +18,10 @@ var port= process.env.PORT || 3000;
 app.use('/assests',express.static(path.join(__dirname,'public')));
 //middlewares start here
 
-app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+app.engine('handlebars', exphbs({helpers:{
+  check:check
+},
+defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
 app.use(session({

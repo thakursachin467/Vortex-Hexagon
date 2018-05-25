@@ -1,0 +1,50 @@
+<style media="screen">
+tr :not(.home){cursor: pointer;}
+.ui-state-hightlight { border: 1px dashed #ccc}
+td {cursor: context-menu;}
+
+</style>
+<div class="container Content">
+<h2 class="page-title text-center">All Pages</h2>
+
+<a href="/admin/pages/add-page" class="btn btn-primary ">Add a new page</a>
+
+<br> <br>
+<table class="table table-striped">
+  <thead>
+    <tr class="home">
+      <th>Title</th>
+      <th>Edit</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+  <tbody >
+    {{#each pages}}
+    <tr id="id_{{_id}}" class="{{slug}}">
+      <td>{{title}}</td>
+      <td> <a href="/admin/pages/edit/{{slug}}">Edit</a> </td>
+      {{#if (check slug "home")}}
+        <td> </td>
+      {{else}}
+      <td> <a href="/admin/pages/delete/{{_id}}">Delete</a> </td>
+      {{/if}}
+    </tr>
+    {{/each}}
+
+  </tbody>
+</table>
+
+</div>
+
+<script type="text/javascript">
+$('tbody').sortable({
+  items:"tr:not('.home')",
+  placeholder:"ui-state-hightlight",
+  update: function(){
+    var ids=$('tbody').sortable("serialize");
+    var url="/admin/pages/reorder";
+    $.post(url,ids);
+  }
+})
+
+</script>

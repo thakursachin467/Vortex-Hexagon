@@ -1,13 +1,7 @@
 {{#if success_msg}}
-<div class="row">
-            <div class="m12 s12 col">
-                <div class="card-panel green darken-1">
-                    <div class="row">
-                        <div class="col l8 white-text">
-                            {{success_msg}}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        {{/if}}
+<div class="alert alert-success" role="alert">
+  <strong>{{success_msg}}</strong>
+</div>
+{{else}}
+
+{{/if}}

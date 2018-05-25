@@ -1,8 +1,26 @@
 const express= require('express');
 const router=express.Router();
+
+
+//our page model
+const pages= require('../models/page');
 //get admin index
 router.get('/',(req,res)=>{
-    res.send('admin');
+    pages.find({})
+    .sort({sorting:1})
+    .then((pages)=>{
+      if(pages){
+          res.render('admin/pages',{
+            pages:pages
+          })
+      }
+      else {
+          error='No Pages Found';
+      }
+    })
+    .catch(()=>{
+      console.log("errors");
+    })
 });
 
 
@@ -18,6 +36,7 @@ router.get('/add-page',(req,res)=>{
     });
 });
 
+//add pages to the database
 router.post('/add-page',(req,res)=>{
   let title= req.body.title;
   let slug;
@@ -28,6 +47,64 @@ router.post('/add-page',(req,res)=>{
     slug= req.body.slug.replace(/\s+/g,'-').toLowerCase();
   }
   let content= req.body.content;
-})
+  pages.findOne({slug:slug})
+  .then((page)=>{
+      if(page) {
+        error='This page slug already exists,choose another';
+          res.render('admin/addpage',{
+            error:error,
+            title:title,
+            slug:slug,
+            content:content
+          });
+
+      }
+      else {
+        let page= new pages({
+          title:title,
+          slug:slug,
+          content:content,
+          sorting:100
+        });
+
+        page.save()
+        .then(()=>{
+          req.flash('success_msg','Page Added sucessfully');
+          res.redirect('/admin/pages');
+        })
+        .catch(()=>{
+          console.log('some error');
+        });
+      }
+
+    });
+
+
+  })
+
+
+router.post('/reorder',(req,res)=>{
+  let ids= req.body['id[]'];
+  let count=0;
+  for(let i=0;i<ids.length;i++) {
+    let id=ids[i];
+    count++;
+    (function(count){
+    pages.findById(id)
+    .then((page)=>{
+      page.sorting=count;
+      page.save()
+
+    })
+  })(count);
+  }
+});
+
+router.get('/edit/:id',(req,res)=>{
+  
+});
+
+
+
 
 module.exports= router;
