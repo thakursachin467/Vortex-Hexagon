@@ -30,7 +30,7 @@ router.get('/',(req,res)=>{
   });
 });
 
-
+//add products route
 router.get('/add-product',(req,res)=>{
     categories.find({})
     .then((categories)=>{
@@ -41,6 +41,7 @@ router.get('/add-product',(req,res)=>{
 
 });
 
+//add products details here
 router.post('/add-product',(req,res)=>{
       let title= req.body.title;
       let slug= req.body.title.replace(/\s+/g,'-').toLowerCase();
@@ -80,5 +81,38 @@ router.post('/add-product',(req,res)=>{
 
 });
 
+router.get('/edit/:id',(req,res)=>{
+      products.findOne({_id:req.params.id})
+      .then((product)=>{
+          if(product) {
+            res.render('admin/edit-product',{
+                  product:product
+            });
+
+          }else {
+            req.flash('error_msg','No such Product found');
+            res.redirect('/admin/products');
+          }
+      });
+});
+
+//delete an item from the database 
+router.get('/delete/:id',(req,res)=>{
+  products.findOne({_id:req.params.id})
+  .then((product)=>{
+      if(product) {
+            products.findOneAndRemove({_id:req.params.id})
+            .then(()=>{
+                req.flash('success_msg','Item Deleted Sucessfully');
+                res.redirect('/admin/products');
+            });
+
+
+      }else {
+        req.flash('error_msg','No such Product found');
+        res.redirect('/admin/products');
+      }
+  });
+});
 
 module.exports= router;
