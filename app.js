@@ -6,6 +6,7 @@ const database= require('./database/connect');
 const pages= require('./routes/pages');
 const bodyParser = require('body-parser')
 const adminpages= require('./routes/admin_pages');
+const admincategories= require('./routes/admin_categories');
 const flash = require('connect-flash');
 const path = require('path');
 const {check}= require('./helpers/hbs');
@@ -52,10 +53,11 @@ app.use(flash());
 });
 
 //all routes related to user handled here
-app.use('/',pages)
+app.use('/',pages);
 //all routes related to admin handled here
-app.use('/admin/pages',adminpages)
-
+app.use('/admin/pages',adminpages);
+//all routes to categories start here
+app.use('/admin/categories',admincategories);
 
 
 
