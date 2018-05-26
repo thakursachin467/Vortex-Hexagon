@@ -13,12 +13,12 @@
   </div>
   <div class="form-group">
     <label for="slug">Price</label>
-    <input type="text" name="price" class="form-control" placeholder="Price" >
+    <input type="number" name="price" class="form-control" placeholder="Price" required>
 
   </div>
   <div class="form-group">
   <label for="sel1">Select Category (select one):</label>
-     <select class="form-control" id="sel1" name="category">
+     <select class="form-control" id="sel1" name="category" required>
        {{#each categories}}
        <option value="{{slug}}">{{title}}</option>
        {{/each}}
@@ -31,7 +31,7 @@
   </div>
   <div class="form-group">
    <label for="exampleInputFile">Upload Image</label>
-   <input type="file" class="form-control-file"  name="image" aria-describedby="fileHelp">
+   <input type="file" class="form-control-file"  name="image" aria-describedby="fileHelp" accept="image/*">
    <small id="fileHelp" class="form-text text-muted">Upload Appropriate Image of the product</small>
  </div>
   <div class="d-flex justify-content-center">

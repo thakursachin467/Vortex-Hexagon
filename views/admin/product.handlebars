@@ -1,3 +1,10 @@
+<style media="screen">
+  #imgpr{
+    width: 100px;
+    height: 60px;
+
+  }
+</style>
 <div class="container Content">
 <h2 class="page-title text-center">All Products</h2>
 
@@ -7,7 +14,7 @@
 {{#if (check count 0)}}
 <h3 class="alert alert-danger text-center">No Products Found</h3>
 {{else}}
-<table class="table table-striped">
+<table class="table table-striped table-hover table-responsive-sm">
   <thead>
     <tr class="home">
       <th>Product</th>
@@ -26,9 +33,9 @@
       <td>{{category}}</td>
       <td>
         {{#if (check image "")}}
-        <img src="/images/noimg.png" alt="no image">
+        <img class="img-thumbnail rounded img-fluid" src="/images/noimg.png" id="imgpr" alt="no image">
         {{else}}
-        <img src="/product_images/{{_id}}/{{image}}" alt="{{title}}">
+        <img class="img-thumbnail rounded img-fluid" id="imgpr" src="/assests/product_images/{{_id}}/{{image}}" alt="{{title}}">
         {{/if}}
       </td>
       <td><a href="/admin/products/edit/{{_id}}">Edit</a> </td>
