@@ -1,0 +1,53 @@
+<div class="container Content">
+<h2 class="page-title text-center">All Products</h2>
+
+<a href="/admin/products/add-product" class="btn btn-primary ">Add a new Product</a>
+
+<br> <br>
+{{#if (check count 0)}}
+<h3 class="alert alert-danger text-center">No Products Found</h3>
+{{else}}
+<table class="table table-striped">
+  <thead>
+    <tr class="home">
+      <th>Product</th>
+      <th>Price</th>
+      <th>Category</th>
+      <th>Product Image</th>
+      <th>Edit</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+  <tbody >
+    {{#each products}}
+    <tr >
+      <td>{{title}}</td>
+      <td>{{price}}</td>
+      <td>{{category}}</td>
+      <td>
+        {{#if (check image "")}}
+        <img src="/images/noimg.png" alt="no image">
+        {{else}}
+        <img src="/product_images/{{_id}}/{{image}}" alt="{{title}}">
+        {{/if}}
+      </td>
+      <td><a href="/admin/products/edit/{{_id}}">Edit</a> </td>
+      <td><a class="confirmdeletion" href="/admin/products/delete/{{_id}}">Delete</a> </td>
+    </tr>
+    {{/each}}
+
+  </tbody>
+</table>
+{{/if}}
+</div>
+
+<script type="text/javascript">
+
+$('a.confirmdeletion').on('click',function(){
+  if(!confirm('Are You sure You want to delete?')){
+    return false;
+  } else {
+    return true;
+  }
+});
+</script>

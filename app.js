@@ -7,10 +7,11 @@ const pages= require('./routes/pages');
 const bodyParser = require('body-parser')
 const adminpages= require('./routes/admin_pages');
 const admincategories= require('./routes/admin_categories');
+const adminproducts= require('./routes/admin_products')
 const flash = require('connect-flash');
 const path = require('path');
 const {check}= require('./helpers/hbs');
-
+const fileUpload= require('express-fileupload');
 
 
 var app= express();
@@ -51,6 +52,9 @@ app.use(flash());
       next();
 
 });
+//fileUpload middlewares
+app.use(fileUpload());
+
 
 //all routes related to user handled here
 app.use('/',pages);
@@ -58,6 +62,9 @@ app.use('/',pages);
 app.use('/admin/pages',adminpages);
 //all routes to categories start here
 app.use('/admin/categories',admincategories);
+
+//all routes to products start here
+app.use('/admin/products',adminproducts);
 
 
 

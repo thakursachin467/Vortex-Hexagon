@@ -1,6 +1,6 @@
 {{#if errors}}
 {{#each errors}}
-<div class="alert alert-danger">
+<div class="alert alert-danger alert-dismissible fade show">
     {{text}}
 </div>
 {{/each}}
@@ -9,7 +9,7 @@
 {{/if}}
 
 {{#if error}}
-<div class="alert alert-danger" role="alert">
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
   {{error}}
 </div>
 {{else}}
@@ -18,7 +18,7 @@
 
 
 {{#if error_msg}}
-<div class="alert alert-danger" role="alert">
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
   <strong>{{error_msg}}</strong>
 </div>
 {{else}}
