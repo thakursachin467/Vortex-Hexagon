@@ -66,7 +66,10 @@ app.use('/admin/categories',admincategories);
 //all routes to products start here
 app.use('/admin/products',adminproducts);
 
+app.get('*', function(req, res){
 
+  res.status(404).render('admin/error');
+});
 
 
 
