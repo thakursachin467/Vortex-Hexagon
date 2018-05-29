@@ -73,6 +73,11 @@ router.post('/add-page',(req,res)=>{
 
         page.save()
         .then(()=>{
+          pages.find({})
+          .sort({sorting:1})
+          .then((page)=>{
+            req.app.locals.pages=page;
+          });
           req.flash('success_msg','Page Added sucessfully');
           res.redirect('/admin/pages');
         })
@@ -98,10 +103,18 @@ router.post('/reorder',(req,res)=>{
     .then((page)=>{
       page.sorting=count;
       page.save()
+      .then(()=>{
+        pages.find({})
+        .sort({sorting:1})
+        .then((page)=>{
+          req.app.locals.pages=page;
+        });
+      });
 
     })
   })(count);
   }
+
 });
 
 //edit page
@@ -135,6 +148,11 @@ router.post('/edit/:slug',(req,res)=>{
         page.slug= slug;
         page.save()
         .then(()=>{
+          pages.find({})
+          .sort({sorting:1})
+          .then((page)=>{
+            req.app.locals.pages=page;
+          });
           req.flash('success_msg','Page Edited sucessfully')
           res.redirect('/admin/pages');
         })
@@ -148,6 +166,11 @@ router.post('/edit/:slug',(req,res)=>{
 router.get('/delete/:id',(req,res)=>{
     pages.findOneAndRemove({_id:req.params.id})
     .then(()=>{
+      pages.find({})
+      .sort({sorting:1})
+      .then((page)=>{
+        req.app.locals.pages=page;
+      });
       res.redirect('/admin/pages');
     });
 });

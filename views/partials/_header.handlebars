@@ -29,12 +29,17 @@
          </button>
          <div class="collapse navbar-collapse " id="navbarCollapse">
            <ul class="navbar-nav mr-auto">
+             {{#each pages}}
+             {{#if (check slug "home")}}
              <li class="nav-item ">
-               <a class="nav-link" href="/">Home </a>
+               <a class="nav-link" href="/">{{title}} </a>
              </li>
-             <li class="nav-item">
-               <a class="nav-link" href="/about">About</a>
+             {{else}}
+             <li class="nav-item ">
+               <a class="nav-link" href="/{{slug}}">{{title}} </a>
              </li>
+             {{/if}}
+             {{/each}}
            </ul>
            <form class="form-inline mt-2 mt-md-0">
              <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">

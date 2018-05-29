@@ -12,6 +12,8 @@ const flash = require('connect-flash');
 const path = require('path');
 const {check}= require('./helpers/hbs');
 const fileUpload= require('express-fileupload');
+const pagemodel= require('./models/page');
+const categorymodel= require('./models/category');
 
 
 var app= express();
@@ -41,6 +43,17 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
 
 app.use(flash());
+
+pagemodel.find({})
+.sort({sorting:1})
+.then((page)=>{
+  app.locals.pages=page;
+});
+
+categorymodel.find({})
+.then((category)=>{
+  app.locals.category=category;
+});
 
 //global variables
  app.use(function(req,res,next) {

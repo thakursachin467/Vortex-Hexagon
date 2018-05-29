@@ -168,11 +168,19 @@ router.get('/delete/:id',(req,res)=>{
   products.findOne({_id:req.params.id})
   .then((product)=>{
       if(product) {
-            products.findOneAndRemove({_id:req.params.id})
-            .then(()=>{
-                req.flash('success_msg','Item Deleted Sucessfully');
-                res.redirect('/admin/products');
+            let path= 'public/product_images/'+ product._id;
+            fs.remove(path,(err)=>{
+              if(err) {
+                console.log(err);
+              } else {
+                products.findOneAndRemove({_id:req.params.id})
+                .then(()=>{
+                    req.flash('success_msg','Item Deleted Sucessfully');
+                    res.redirect('/admin/products');
+                });
+              }
             });
+
 
 
       }else {
@@ -196,9 +204,19 @@ router.post('/product-gallery/:id',(req,res)=>{
 
 });
 
+//delete image from the gallery
 router.get('/delete-image/:name',(req,res)=>{
       console.log(req.params.name);
-      console.log(req.query.id); 
+      console.log(req.query.id);
+      let originalImage= 'public/product_images/'+ req.query.id +'/gallery/'+req.params.name;
+      let thumbImage= 'public/product_images/'+ req.query.id +'/gallery/thumbs/'+req.params.name;
+      fs.remove(originalImage,(err)=>{
+          fs.remove(thumbImage,(err)=>{
+
+            req.flash('success_msg','Image Deleted Sucessfully');
+            res.redirect('/admin/products/edit/'+req.query.id);
+          })
+      });
 });
 
 module.exports= router;

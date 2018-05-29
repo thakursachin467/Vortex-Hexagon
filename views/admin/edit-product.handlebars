@@ -121,4 +121,12 @@ padding: 10px;}
 }
 }
 
+$('a.confirmdeletion').on('click',function(){
+  if(!confirm('Are You sure You want to delete?')){
+    return false;
+  } else {
+    return true;
+  }
+});
+
 		</script>
