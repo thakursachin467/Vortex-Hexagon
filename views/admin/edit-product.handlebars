@@ -1,6 +1,6 @@
 <style>
   .thumb {
-    height: 75px;
+    height: 100px;
     border: 1px solid #000;
     margin: 10px 5px 0 0;
 
@@ -36,14 +36,19 @@ padding: 10px;}
 
   </div>
   <div class="form-group">
+    <label for="slug">Price</label>
+    <input type="number" name="price" class="form-control" placeholder="Price" value="{{product.price}}" required>
+
+  </div>
+  <div class="form-group">
   <label for="sel1">Select Category (select one):</label>
      <select class="form-control" id="sel1" name="category" required>
        <option value="{{cate}}">{{product.category}}</option>
      </select>
    </div>
   <div class="form-group">
-    <label for="content">Content</label>
-    <textarea type="text" name="content" class="form-control" cols="30" rows="8" placeholder="content" required>{{product.description}}</textarea>
+    <label for="description">Description</label>
+    <textarea type="text" name="content" class="form-control" cols="30" rows="8" placeholder="description" required>{{product.description}}</textarea>
 
   </div>
 
@@ -53,8 +58,12 @@ padding: 10px;}
          <hr>
          <p>
 
-         {{#if (check product.image "")}}
-          <img  src="/assests/product_images/noimage.png" id="imgpr" alt="">
+         {{#if (check product.image undefined)}}
+         <div class="form-group">
+          <label for="exampleInputFile">Upload Image</label>
+          <input type="file" class="form-control-file"  name="image" aria-describedby="fileHelp" accept="image/*">
+          <small id="fileHelp" class="form-text text-muted">Upload Appropriate Image of the product</small>
+        </div>
          {{else}}
          <img  src="/assests/product_images/{{product._id}}/{{product.image}}" id="imgpr" alt="">
 
@@ -77,11 +86,12 @@ padding: 10px;}
       No Images In Gallery
   </div>
   {{else}}
-  <ul>
+  <ul style="list-style-type:none;" class="list-inline">
+
   {{#each galleryImages}}
-  <li>
-  <img  src="/assests/product_images/{{product._id}}/gallery/thumbs/{{this}}" id="imgpr" alt="">&nbsp;
-  <a class="confirmdeletion" href="/admin/products/delete-image/{{this}}?id{{product._id}}"></a>
+  <li class="list-inline-item">
+  <img  src="/assests/product_images/{{../product._id}}/gallery/thumbs/{{this}}" class="thumb img-fluid" alt="">&nbsp;
+  <a class="confirmdeletion" href="/admin/products/delete-image/{{this}}?id={{../product._id}}">delete</a>
   </li>
   {{/each}}
    </ul>
@@ -90,16 +100,19 @@ padding: 10px;}
 </div>
 <br> <br>
 <form class="dropzone"  id="my-awesome-dropzone"  action="/admin/products/product-gallery/{{product._id}}" method="post" enctype="multipart/form-data">
-
+  <div class="fallback">
+      <input name="file" type="file" multiple accept="image/*"/>
+      <input type="submit"  value="Upload">
+    </div>
 </form>
 </div>
 
 <script>
-			CKEDITOR.replace('content');
+			CKEDITOR.replace( 'content' );
       Dropzone.options.myAwesomeDropzone = {
         acceptedFiles: "image/*",
         maxFilesize: 2,
-        init: function() {
+       init: function() {
           this.on("queuecomplete",function(file){
               setTimeout(function(){
                   location.reload()

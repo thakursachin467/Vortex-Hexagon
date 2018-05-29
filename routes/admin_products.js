@@ -81,22 +81,29 @@ router.post('/add-product',(req,res)=>{
 
 });
 
+//edit a product
 router.get('/edit/:id',(req,res)=>{
 
       products.findOne({_id:req.params.id})
       .then((product)=>{
           if(product) {
-            var galleryDir= 'public/product_images/' + product._id  +'/gallery';
+            var galleryDir= 'public/product_images/' + product._id  +'/gallery/thumbs';
               var galleryImages= null;
               fs.readdir(galleryDir)
               .then((files)=>{
+                if(files) {
                   galleryImages=files;
+                }
+                else {
+                  galleryImages= null;
+                }
+                  res.render('admin/edit-product',{
+                        product:product,
+                        galleryImages:galleryImages,
+                        cate: product.category.replace('/\s+/g','-').toLowerCase()
+                  });
               });
-            res.render('admin/edit-product',{
-                  product:product,
-                  galleryImages:galleryImages,
-                  cate: product.category.replace('/\s+/g','-').toLowerCase()
-            });
+
 
           }else {
             req.flash('error_msg','No such Product found');
@@ -106,7 +113,54 @@ router.get('/edit/:id',(req,res)=>{
 });
 
 router.post('/edit/:id',(req,res)=>{
-      
+  let title= req.body.title;
+  let slug= req.body.title.replace(/\s+/g,'-').toLowerCase();
+  let price= req.body.price;
+  let pricenew= parseFloat(price).toFixed(2);
+  let description= req.body.content;
+  let category= req.body.category;
+  let image;
+  if(req.files!=null) {
+    image=   req.files.image.name;
+  } else {
+   image= null;
+  }
+
+  products.findOne({slug:slug,_id:{'$ne':req.params.id}})
+  .then((product)=>{
+    if(product){
+          req.flash('error_msg',`This product name ${title} already exists please choose another one`);
+          res.redirect('/admin/products/edit/'+ req.params.id);
+
+    } else {
+          products.findById(req.params.id)
+          .then((product)=>{
+            product.title= title;
+            product.slug= slug;
+            product.price= pricenew;
+            product.description= description;
+            product.category= category;
+            let oldimage= product.image;
+            if(image!=null) {
+              product.image= image;
+            }
+            product.save()
+            .then((productnew)=>{
+                if (image!=null) {
+                  let path= 'public/product_images/'+ productnew._id +'/'+image;
+                /*  if(oldimage!=""){
+                    fs.remove(path);
+                  } */
+                  let productimage= req.files.image;
+                  productimage.mv(path,error => console.log(error));
+                }
+                req.flash('success_msg','Sucessfully Save New Info');
+                res.redirect('/admin/products/edit/'+ req.params.id);
+            });
+
+          });
+    }
+  });
 });
 
 //delete an item from the database
@@ -126,6 +180,25 @@ router.get('/delete/:id',(req,res)=>{
         res.redirect('/admin/products');
       }
   });
+});
+
+//post product Images to gallery
+router.post('/product-gallery/:id',(req,res)=>{
+
+      let productImage= req.files.file;
+      let id= req.params.id;
+      let path= 'public/product_images/'+ id +'/gallery/'+req.files.file.name;
+      let thumbspath= 'public/product_images/'+ id +'/gallery/thumbs/'+req.files.file.name;
+      productImage.mv(path,err=> console.log(err));
+        productImage.mv(thumbspath,err=> console.log(err));
+
+        res.sendStatus(200);
+
+});
+
+router.get('/delete-image/:name',(req,res)=>{
+      console.log(req.params.name);
+      console.log(req.query.id); 
 });
 
 module.exports= router;
