@@ -82,11 +82,20 @@ router.post('/add-product',(req,res)=>{
 });
 
 router.get('/edit/:id',(req,res)=>{
+
       products.findOne({_id:req.params.id})
       .then((product)=>{
           if(product) {
+            var galleryDir= 'public/product_images/' + product._id  +'/gallery';
+              var galleryImages= null;
+              fs.readdir(galleryDir)
+              .then((files)=>{
+                  galleryImages=files;
+              });
             res.render('admin/edit-product',{
-                  product:product
+                  product:product,
+                  galleryImages:galleryImages,
+                  cate: product.category.replace('/\s+/g','-').toLowerCase()
             });
 
           }else {
@@ -96,7 +105,11 @@ router.get('/edit/:id',(req,res)=>{
       });
 });
 
-//delete an item from the database 
+router.post('/edit/:id',(req,res)=>{
+      
+});
+
+//delete an item from the database
 router.get('/delete/:id',(req,res)=>{
   products.findOne({_id:req.params.id})
   .then((product)=>{

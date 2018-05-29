@@ -1,0 +1,111 @@
+<style>
+  .thumb {
+    height: 75px;
+    border: 1px solid #000;
+    margin: 10px 5px 0 0;
+
+  }
+  .dotted {border-style: dotted;
+  margin-bottom: 10px;
+padding: 10px;}
+#imgpr{
+  width: 100px;
+  height: 60px;
+
+}
+
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.4.0/dropzone.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.4.0/min/dropzone.min.js"> </script>
+<div class="container Content">
+<h2 class="page-title text-center">Edit Product</h2>
+
+<a href="/admin/products" class="btn btn-primary ">Go back to all Products</a>
+
+<br> <br>
+
+<form  action="/admin/products/edit/{{product._id}}" method="post" enctype="multipart/form-data">
+  <div class="form-group">
+    <label for="title">Title</label>
+    <input type="text" name="title" class="form-control" placeholder="Enter Title" value="{{product.title}}" required>
+
+  </div>
+  <div class="form-group">
+    <label for="slug">Slug</label>
+    <input type="text" name="slug" class="form-control" placeholder="slug" value="{{product.slug}}" >
+
+  </div>
+  <div class="form-group">
+  <label for="sel1">Select Category (select one):</label>
+     <select class="form-control" id="sel1" name="category" required>
+       <option value="{{cate}}">{{product.category}}</option>
+     </select>
+   </div>
+  <div class="form-group">
+    <label for="content">Content</label>
+    <textarea type="text" name="content" class="form-control" cols="30" rows="8" placeholder="content" required>{{product.description}}</textarea>
+
+  </div>
+
+
+       <div class="form-group ">
+         <label for="">Current Image</label>
+         <hr>
+         <p>
+
+         {{#if (check product.image "")}}
+          <img  src="/assests/product_images/noimage.png" id="imgpr" alt="">
+         {{else}}
+         <img  src="/assests/product_images/{{product._id}}/{{product.image}}" id="imgpr" alt="">
+
+         {{/if}}
+         </p>
+       </div>
+
+  <div class="d-flex justify-content-center">
+  <button type="submit"  class="btn btn-primary">Confirm Changes</button>
+    </div>
+</form>
+<br> <br>
+<div class="form-group">
+  <label for="">Gallery Images</label>
+  <hr>
+  <p>
+
+  {{#if (check galleryImages null)}}
+  <div class="alert alert-danger alert-dismissible fade show">
+      No Images In Gallery
+  </div>
+  {{else}}
+  <ul>
+  {{#each galleryImages}}
+  <li>
+  <img  src="/assests/product_images/{{product._id}}/gallery/thumbs/{{this}}" id="imgpr" alt="">&nbsp;
+  <a class="confirmdeletion" href="/admin/products/delete-image/{{this}}?id{{product._id}}"></a>
+  </li>
+  {{/each}}
+   </ul>
+  {{/if}}
+  </p>
+</div>
+<br> <br>
+<form class="dropzone"  id="my-awesome-dropzone"  action="/admin/products/product-gallery/{{product._id}}" method="post" enctype="multipart/form-data">
+
+</form>
+</div>
+
+<script>
+			CKEDITOR.replace('content');
+      Dropzone.options.myAwesomeDropzone = {
+        acceptedFiles: "image/*",
+        maxFilesize: 2,
+        init: function() {
+          this.on("queuecomplete",function(file){
+              setTimeout(function(){
+                  location.reload()
+              },5000);
+          });
+}
+}
+
+		</script>
