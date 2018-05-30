@@ -4,22 +4,13 @@ const pages= require('../models/page');
 
 
 router.get('/',(req,res)=>{
-  pages.findOne({slug:'home'})
-  .then((page)=>{
-        if(page){
-          res.render('index',{
-            title:page.title,
-            content:page.content
-          });
 
-        } else {
-          req.flash('error_msg','Page Not found');
-          res.redirect('/');
-        }
+          res.render('home');
+
 
   });
 
-});
+
 
 
 router.get('/:slug',(req,res)=>{

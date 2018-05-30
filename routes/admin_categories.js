@@ -49,8 +49,14 @@ router.post('/add-category',(req,res)=>{
             });
             category.save()
             .then(()=>{
+              categories.find({})
+              .then((category)=>{
+                req.app.locals.category=category;
                 req.flash('success_msg','Category Added Sucessfully')
                 res.redirect('/admin/categories');
+              });
+
+
             });
 
           }
@@ -85,9 +91,14 @@ router.post('/edit/:slug',(req,res)=>{
           category.slug= req.body.title.replace(/\s+/g,'-').toLowerCase();
           category.save()
           .then(()=>{
-            req.flash('success_msg','Category Sucessfully Changed');
-            res.redirect('/admin/categories');
-          })
+            categories.find({})
+            .then((category)=>{
+              req.app.locals.category=category;
+              req.flash('success_msg','Category Sucessfully Changed');
+              res.redirect('/admin/categories');
+            });
+
+          });
 
       });
     } });
@@ -98,8 +109,13 @@ router.post('/edit/:slug',(req,res)=>{
 router.get('/delete/:id',(req,res)=>{
         categories.findOneAndRemove({_id:req.params.id})
         .then(()=>{
-          req.flash('success_msg','Category Sucessfully Deleted');
-          res.redirect('/admin/categories');
+          categories.find({})
+          .then((category)=>{
+            req.app.locals.category=category;
+            req.flash('success_msg','Category Sucessfully Deleted');
+            res.redirect('/admin/categories');
+          });
+
         });
 });
 
