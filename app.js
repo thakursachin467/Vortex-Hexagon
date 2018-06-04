@@ -7,10 +7,11 @@ const pages= require('./routes/pages');
 const bodyParser = require('body-parser')
 const adminpages= require('./routes/admin_pages');
 const admincategories= require('./routes/admin_categories');
-const adminproducts= require('./routes/admin_products')
+const adminproducts= require('./routes/admin_products');
+const products= require('./routes/products')
 const flash = require('connect-flash');
 const path = require('path');
-const {check}= require('./helpers/hbs');
+const {check,truncate,striptag,checkarray}= require('./helpers/hbs');
 const fileUpload= require('express-fileupload');
 const pagemodel= require('./models/page');
 const categorymodel= require('./models/category');
@@ -23,7 +24,10 @@ app.use('/assests',express.static(path.join(__dirname,'public')));
 //middlewares start here
 
 app.engine('handlebars', exphbs({helpers:{
-  check:check
+  check:check,
+  truncate:truncate,
+  striptag:striptag,
+  checkarray:checkarray
 },
 defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
@@ -78,6 +82,10 @@ app.use('/admin/categories',admincategories);
 
 //all routes to products start here
 app.use('/admin/products',adminproducts);
+
+//all routes to show products start here
+app.use('/products',products);
+
 
 app.get('*', function(req, res){
 

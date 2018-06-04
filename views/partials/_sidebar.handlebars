@@ -1,0 +1,11 @@
+<h3>Categories</h3>
+<ul class="list-group">
+    <li class="list-group-item">
+        <a href="/products/all">All Products</a>
+    </li>
+    {{#each category}}
+    <li class="list-group-item">
+        <a href="/products/{{slug}}">{{title}}</a>
+    </li>
+    {{/each}}
+</ul>

@@ -163,7 +163,32 @@ router.post('/edit/:id',(req,res)=>{
   });
 });
 
+//delete an item from the database
+router.get('/delete/:id',(req,res)=>{
+  products.findOne({_id:req.params.id})
+  .then((product)=>{
+      if(product) {
+            let path= 'public/product_images/'+ product._id;
+            fs.remove(path,(err)=>{
+              if(err) {
+                console.log(err);
+              } else {
+                products.findOneAndRemove({_id:req.params.id})
+                .then(()=>{
+                    req.flash('success_msg','Item Deleted Sucessfully');
+                    res.redirect('/admin/products');
+                });
+              }
+            });
 
+
+
+      }else {
+        req.flash('error_msg','No such Product found');
+        res.redirect('/admin/products');
+      }
+  });
+});
 
 //post product Images to gallery
 router.post('/product-gallery/:id',(req,res)=>{

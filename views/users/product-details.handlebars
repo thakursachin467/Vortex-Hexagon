@@ -1,0 +1,58 @@
+<style media="screen">
+  #imgpr1{
+    width: 150px;
+    height: 150px;
+
+  }
+  #imgpr{
+    width: 100%;
+
+
+  }
+</style>
+<div class="container mt-3 Content">
+  <div class="row">
+    <div class="col-md-3">
+      {{> _sidebar}}
+    </div>
+    <div class="col-md-9">
+      <h1 class="page-header">{{product.title}}</h1>
+<div class="row products ">
+        <div class="col-xs-12 col-md-5">
+            <img id="imgpr" src="/assests/product_images/{{product._id}}/{{product.image}}" alt="">
+            <br>
+        </div>
+        <div class="col-xs-12 col-md-7">
+          <p>{{ striptag product.description}}</p>
+          <p>&#8377; {{product.price}}</p>
+          <a href="/cart/add/{{product.slug}}">Add to cart</a>
+
+        </div>
+
+        <div class="col-xs-12 mt-2">
+          {{#if (checkarray galleryImages)}}
+                {{#each galleryImages}}
+
+                  <a href="/assests/product_images/{{../product._id}}/gallery/thumbs/{{this}}" data-toggle="lightbox" data-gallery="example-gallery" data-max-width="600" class="col-sm-4">
+                      <img id="imgpr1" class="img-fluid rounded" src="/assests/product_images/{{../product._id}}/gallery/thumbs/{{this}}" alt="">
+                    </a>
+
+                {{/each}}
+
+                {{else}}
+                  <h1 class="alert alert-danger mt-4 ml-5">No Images Found</h1>
+
+                {{/if}}
+
+        </div>
+
+</div>
+</div>
+</div>
+</div>
+<script type="text/javascript">
+$(document).on('click', '[data-toggle="lightbox"]', function(event) {
+              event.preventDefault();
+              $(this).ekkoLightbox();
+          });
+</script>

@@ -1,11 +1,17 @@
 const express= require('express');
 const router=express.Router();
 const pages= require('../models/page');
+const categorymodel= require('../models/category');
 
 
 router.get('/',(req,res)=>{
 
-          res.render('home');
+
+          categorymodel.find({})
+          .then((category)=>{
+            res.render('home');
+            req.app.locals.category=category;
+          });
 
 
   });

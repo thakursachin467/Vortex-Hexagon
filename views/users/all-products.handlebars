@@ -1,0 +1,34 @@
+<style media="screen">
+  #imgpr{
+    width: 100px;
+    height: 60px;
+
+  }
+</style>
+<div class="container mt-3">
+  <div class="row">
+    <div class="col-md-3">
+      {{> _sidebar}}
+    </div>
+    <div class="col-md-9">
+<div class="row products Content">
+
+{{#each products}}
+<div class="col-md-4">
+      <div class="card" >
+        <a href="/products/{{category}}/{{slug}}">
+        <img class="card-img-top" src="/assests/product_images/{{_id}}/{{image}}" alt="{{slug}}">
+        </a>
+        <div class="card-body">
+          <h5 class="card-title">{{title}}</h5>
+          <p class="card-text">{{truncate (striptag description) 20}}</p>
+          <h3>&#8377; {{price}}</h3>
+          <a href="/products/{{category}}/{{slug}}" class="btn btn-primary">View details</a>
+        </div>
+</div>
+</div>
+{{/each}}
+</div>
+</div>
+</div>
+</div>
