@@ -1,6 +1,6 @@
 module.exports={
   check : function(value1,value2) {
-    console.log(value1);
+
     if(value1==value2) {
       return true;
     }
@@ -23,12 +23,35 @@ module.exports={
 
     },
     checkarray: function(value1){
-      if(value1.length!=0 ) {
-        return true;
+      if( value1==undefined ) {
+        return false;
+      }
+      else if (value1.length!=0 ) {
+          return true;
       }
       else {
         return false;
       }
+    },
+    Subtotal: function(value1,value2) {
+      return (value1* value2).toFixed(2);
+    },
+    total:function(value) {
+          let total=0;
+          if(value== undefined) {
+            return 0;
+          } else {
+            for(var i=0;i<value.length;i++) {
+              total=  total + value[i].quantity * value[i].price;
+            }
+          }
+          return total;
+    },
+    currency:function(value) {
+      return value/65;
+    },
+    inc: function(value) {
+      return value+1;
     }
 
 

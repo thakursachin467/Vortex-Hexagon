@@ -42,7 +42,7 @@ router.get('/:category/:slug',(req,res)=>{
               fs.readdir(galleryDir,(err,files)=>{
                     if (err){ console.log(err)}
                     else {
-                      console.log(product);
+                      
                       galleryImages=files;
                       res.render('users/product-details',{
                           galleryImages:galleryImages,

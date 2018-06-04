@@ -1,0 +1,98 @@
+<style media="screen">
+  #imgpr{
+    width: 100px;
+    height: 60px;
+
+  }
+  table.align-middle td {
+    vertical-align: middle !important;
+  }
+
+</style>
+<div class="container Content">
+  <h1>My Cart</h1>
+  <hr>
+      {{#if (checkarray cart)}}
+          <table class="table table-striped align-middle table-hover mt-5">
+            <thead>
+              <tr>
+                <th>Image</th>
+                <th>Title</th>
+                <th>Price</th>
+                <th>quantity</th>
+                <th></th>
+                <th>Subtotal</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each cart}}
+                  <tr>
+                    <td> <img src="/assests/{{image}}" id="imgpr"> </td>
+                    <td>{{title}}</td>
+                    <td>&#8377;{{price}}</td>
+                    <td>{{quantity}}</td>
+                    <td>
+                      <a href="/cart/update/{{title}}?action=add">+</a>&nbsp;
+                      <a href="/cart/update/{{title}}?action=remove">-</a>&nbsp;
+                      <a href="/cart/update/{{title}}?action=clear">Delete</a>&nbsp;
+                    </td>
+                    <td>&#8377;{{Subtotal price quantity}}</td>
+                  </tr>
+
+              {{/each}}
+
+            </tbody>
+            <tfoot>
+                <tr>
+                  <th><div class="align-items-center">
+                       <a   href="/products/all" class="btn btn-primary">Shop More</a>
+                  </div></th>
+                  <th><a href="/cart/clear" class="btn btn-danger confirmdeletion">Clear Cart</a></th>
+                  <th></th>
+                  <th><form action="https://www.sandbox.paypal.com/us/cgi-bin/webscr" method="post">
+                   <input type="hidden" name="cmd" value="_cart">
+                   <input type="hidden" name="upload" value="1">
+                   <input type="hidden" name="business" value="thakursachin467@gmail.com">
+                   {{#each cart}}
+                          <input type="hidden" name="item_name_{{inc @index}}" value="{{title}}">
+                          <input type="hidden" name="amount_{{inc @index}}" value="{{currency price}}">
+                          <input type="hidden" name="quantity_{{inc @index}}" value="{{quantity}}">
+                   {{/each}}
+                   <input type="hidden" name="currency_code" value="USD">
+                   <input type="hidden" name="amount" value="{{currency (total cart)}}">
+                   <input type="image" src="http://www.paypal.com/en_US/i/btn/x-click-but01.gif" name="submit" alt="Make payments with PayPal - it's fast, free and secure!">
+                  </form>   </th>
+                  <th><a href="" class="btn btn-primary">Buy Now</a></th>
+                  <th>Total: &#8377;{{total cart}}</th>
+
+                </tr>
+            </tfoot>
+
+          </table>
+
+
+
+
+      {{else}}
+          <div class="alert alert-danger mt-3">
+
+              <h1 class="text-center">No Items in cart</h1>
+
+          </div>
+          <div class="align-items-center">
+               <a   href="/products/all" class="btn btn-primary">Shop Here</a>
+          </div>
+
+      {{/if}}
+</div>
+
+<script type="text/javascript">
+
+$('a.confirmdeletion').on('click',function(){
+  if(!confirm('Are You sure You want to clear cart?')){
+    return false;
+  } else {
+    return true;
+  }
+});
+</script>

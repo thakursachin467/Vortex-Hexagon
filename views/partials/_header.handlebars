@@ -41,13 +41,20 @@
              {{/if}}
              {{/each}}
            </ul>
+           <ul class="navbar-nav mr-3">
+             <li class="nav-item ">
+               <a class="nav-link" href="/cart/checkout">Cart ({{#if (checkarray cart)}}
+                {{cart.length}}
+                  {{else}}
+                0
+                  {{/if}})
+               </a>
+             </li>
+           </ul>
            <form class="form-inline mt-2 mt-md-0">
-             <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+
+             <input class="form-control mr-sm-2" type="search" placeholder="Search" name="search" aria-label="Search">
            </form>
          </div>
        </nav>
      </header>
-
-
-    
