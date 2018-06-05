@@ -1,21 +1,3 @@
-<!--<nav class="navbar navbar-light bg-light navbar-expand-md">
-    <h6 class=" mr-md-auto ">
-      <a class="navbar-brand" href="/">
-     <img src="/assests/logo.png" width="150" height="150" class="d-inline-block align-top" alt="">
-
-    </a>
-  </h6>
-    <nav class="my-2 my-md-0 mr-md-3">
-      <a class="p-2 text-dark" href="#">Features</a>
-      <a class="p-2 text-dark" href="#">Enterprise</a>
-      <a class="p-2 text-dark" href="#">Support</a>
-      <a class="p-2 text-dark" href="#">Pricing</a>
-      <a class="btn btn-outline-primary" href="/login">Login</a>
-    </nav>
-
-    <a class="btn btn-outline-primary" href="/signup">Sign up</a>
-  </nav>
--->
 
   <header class="header">
        <!-- Fixed navbar -->
@@ -48,14 +30,6 @@
           Welcome,{{user.name}}
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-
-            <a class="dropdown-item" href="/cart/checkout">Cart ({{#if (checkarray cart)}}
-             {{cart.length}}
-               {{else}}
-             0
-               {{/if}})
-            </a>
-
           {{#each pages}}
           {{#if (check slug "home")}}
 
@@ -67,6 +41,12 @@
 
           {{/if}}
           {{/each}}
+          <a class="dropdown-item" href="/cart/checkout">Cart ({{#if (checkarray cart)}}
+           {{cart.length}}
+             {{else}}
+           0
+             {{/if}})
+          </a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="/user/logout">Logout</a>
         </div>
