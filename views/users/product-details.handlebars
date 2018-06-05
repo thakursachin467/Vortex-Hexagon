@@ -25,7 +25,11 @@
         <div class="col-xs-12 col-md-7">
           <p>{{ striptag product.description}}</p>
           <p>&#8377; {{product.price}}</p>
+          {{#if user}}
           <a href="/cart/add/{{product.slug}}">Add to cart</a>
+          {{else}}
+            <a href="/user/login">You Must Be Logged In To Purchase Items.</a>
+          {{/if}}
 
         </div>
 

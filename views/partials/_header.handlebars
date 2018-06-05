@@ -51,7 +51,34 @@
                </a>
              </li>
              {{#if user}}
-                 <li class="nav-item"> <a class="nav-link" href="/user/logout">Logout</a>  </li>
+             <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Welcome,{{user.name}}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <li class="nav-item ">
+            <a class="nav-link" href="/cart/checkout">Cart ({{#if (checkarray cart)}}
+             {{cart.length}}
+               {{else}}
+             0
+               {{/if}})
+            </a>
+          </li>
+          {{#each pages}}
+          {{#if (check slug "home")}}
+
+            <a class="dropdown-item" href="/">{{title}} </a>
+
+          {{else}}
+
+            <a class="dropdown-item" href="/{{slug}}">{{title}} </a>
+
+          {{/if}}
+          {{/each}}
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="/user/logout">Logout</a>
+        </div>
+      </li>
              {{else}}
              <li  class="nav-item"> <a  class="nav-link" href="/user/register">Register</a>  </li>
              <li class="nav-item"> <a class="nav-link" href="/user/login">Login</a>  </li>

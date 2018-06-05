@@ -8,11 +8,11 @@ const products= require('../models/products');
 //our categories model
 const categories= require('../models/category');
 
-
+const {ensureAuthenticated,ensureAdmin} = require('../helpers/auth');
 
 // all pages starting with /admin/products end up here
 
-router.get('/',(req,res)=>{
+router.get('/',ensureAdmin,(req,res)=>{
   let count;
   products.count()
   .then((total)=>{
@@ -31,7 +31,7 @@ router.get('/',(req,res)=>{
 });
 
 //add products route
-router.get('/add-product',(req,res)=>{
+router.get('/add-product',ensureAdmin,(req,res)=>{
     categories.find({})
     .then((categories)=>{
         res.render('admin/addproducts',{
@@ -42,7 +42,7 @@ router.get('/add-product',(req,res)=>{
 });
 
 //add products details here
-router.post('/add-product',(req,res)=>{
+router.post('/add-product',ensureAdmin,(req,res)=>{
       let title= req.body.title;
       let slug= req.body.title.replace(/\s+/g,'-').toLowerCase();
       let price= req.body.price;
@@ -82,7 +82,7 @@ router.post('/add-product',(req,res)=>{
 });
 
 //edit a product
-router.get('/edit/:id',(req,res)=>{
+router.get('/edit/:id',ensureAdmin,(req,res)=>{
 
       products.findOne({_id:req.params.id})
       .then((product)=>{
@@ -112,7 +112,7 @@ router.get('/edit/:id',(req,res)=>{
       });
 });
 
-router.post('/edit/:id',(req,res)=>{
+router.post('/edit/:id',ensureAdmin,(req,res)=>{
   let title= req.body.title;
   let slug= req.body.title.replace(/\s+/g,'-').toLowerCase();
   let price= req.body.price;
@@ -164,7 +164,7 @@ router.post('/edit/:id',(req,res)=>{
 });
 
 //delete an item from the database
-router.get('/delete/:id',(req,res)=>{
+router.get('/delete/:id',ensureAdmin,(req,res)=>{
   products.findOne({_id:req.params.id})
   .then((product)=>{
       if(product) {
@@ -191,7 +191,7 @@ router.get('/delete/:id',(req,res)=>{
 });
 
 //post product Images to gallery
-router.post('/product-gallery/:id',(req,res)=>{
+router.post('/product-gallery/:id',ensureAdmin,(req,res)=>{
 
       let productImage= req.files.file;
       let id= req.params.id;
@@ -205,7 +205,7 @@ router.post('/product-gallery/:id',(req,res)=>{
 });
 
 //delete image from the gallery
-router.get('/delete-image/:name',(req,res)=>{
+router.get('/delete-image/:name',ensureAdmin,(req,res)=>{
       console.log(req.params.name);
       console.log(req.query.id);
       let originalImage= 'public/product_images/'+ req.query.id +'/gallery/'+req.params.name;

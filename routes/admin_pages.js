@@ -1,6 +1,6 @@
 const express= require('express');
 const router=express.Router();
-
+const {ensureAuthenticated,ensureAdmin} = require('../helpers/auth');
 // all pages starting with /admin/pages end up here
 
 
@@ -9,7 +9,7 @@ const pages= require('../models/page');
 
 
 //get admin index
-router.get('/',(req,res)=>{
+router.get('/',ensureAdmin,(req,res)=>{
     pages.find({})
     .sort({sorting:1})
     .then((pages)=>{
@@ -29,7 +29,7 @@ router.get('/',(req,res)=>{
 
 
 //get add page
-router.get('/add-page',(req,res)=>{
+router.get('/add-page',ensureAdmin,(req,res)=>{
     let title= "";
     let slug="";
     let content="";
@@ -41,7 +41,7 @@ router.get('/add-page',(req,res)=>{
 });
 
 //add pages to the database
-router.post('/add-page',(req,res)=>{
+router.post('/add-page',ensureAdmin,(req,res)=>{
   let title= req.body.title;
   let slug;
   if(req.body.slug==""){
@@ -92,7 +92,7 @@ router.post('/add-page',(req,res)=>{
   });
 
 //router rearrange page
-router.post('/reorder',(req,res)=>{
+router.post('/reorder',ensureAdmin,(req,res)=>{
   let ids= req.body['id[]'];
   let count=0;
   for(let i=0;i<ids.length;i++) {
@@ -118,7 +118,7 @@ router.post('/reorder',(req,res)=>{
 });
 
 //edit page
-router.get('/edit/:id',(req,res)=>{
+router.get('/edit/:id',ensureAdmin,(req,res)=>{
 
   pages.findOne({slug:req.params.id})
   .then((page)=>{
@@ -129,7 +129,7 @@ router.get('/edit/:id',(req,res)=>{
 });
 
 //update the edited page
-router.post('/edit/:slug',(req,res)=>{
+router.post('/edit/:slug',ensureAdmin,(req,res)=>{
 
   let title= req.body.title;
   let slug;
@@ -163,7 +163,7 @@ router.post('/edit/:slug',(req,res)=>{
 });
 
 
-router.get('/delete/:id',(req,res)=>{
+router.get('/delete/:id',ensureAdmin,(req,res)=>{
     pages.findOneAndRemove({_id:req.params.id})
     .then(()=>{
       pages.find({})

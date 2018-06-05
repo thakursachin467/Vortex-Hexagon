@@ -2,10 +2,10 @@ const express= require('express');
 let router=  express.Router();
 const products= require('../models/products');
 const categorymodel= require('../models/category');
-
+const {ensureAuthenticated,ensureAdmin} = require('../helpers/auth');
 //add product to cart
 
-router.get('/add/:slug',(req,res)=>{
+router.get('/add/:slug',ensureAuthenticated,(req,res)=>{
 
 
       products.findOne({slug:req.params.slug})
@@ -54,14 +54,14 @@ router.get('/add/:slug',(req,res)=>{
 
 
 //get checkout page
-router.get('/checkout',(req,res)=>{
+router.get('/checkout',ensureAuthenticated,(req,res)=>{
   res.render('users/checkout',{
     cart:req.session.cart
   })
 })
 
 //update on product
-router.get('/update/:title',(req,res)=>{
+router.get('/update/:title',ensureAuthenticated,(req,res)=>{
         var title= req.params.title;
         var action= req.query.action;
         var cart= req.session.cart;
@@ -94,7 +94,7 @@ router.get('/update/:title',(req,res)=>{
         res.redirect('/cart/checkout');
 });
 
-router.get('/clear',(req,res)=>{
+router.get('/clear',ensureAuthenticated,(req,res)=>{
   delete req.session.cart;
   req.flash('success_msg','Cart cleared');
   res.redirect('/cart/checkout');

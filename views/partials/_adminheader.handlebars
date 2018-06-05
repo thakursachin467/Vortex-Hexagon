@@ -10,18 +10,37 @@
        </button>
        <div class="collapse navbar-collapse " id="navbarCollapse">
          <ul class="navbar-nav mr-auto">
+           {{#each pages}}
+           {{#if (check slug "home")}}
            <li class="nav-item ">
-             <a class="nav-link" href="/admin/pages">Pages </a>
-             </li>
-             <a class="nav-link" href="/admin/categories">Categories </a>
-             </li>
-             <a class="nav-link" href="/admin/products">Products </a>
-             </li>
+             <a class="nav-link" href="/">{{title}} </a>
+           </li>
+           {{else}}
+           <li class="nav-item ">
+             <a class="nav-link" href="/{{slug}}">{{title}} </a>
+           </li>
+           {{/if}}
+           {{/each}}
          </ul>
        </ul>
        <ul class="navbar-nav mr-3">
          {{#if user}}
-             <li class="nav-item"> <a class="nav-link" href="/user/logout">Logout</a>  </li>
+         <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          hello,{{user.name}}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+            <a class="dropdown-item" href="/admin/pages">Pages </a>
+
+            <a class="dropdown-item" href="/admin/categories">Categories </a>
+
+            <a class="dropdown-item" href="/admin/products">Products </a>
+
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="/user/logout">Logout</a>
+        </div>
+      </li>
          {{else}}
          <li  class="nav-item"> <a  class="nav-link" href="/user/register">Register</a>  </li>
          <li class="nav-item"> <a class="nav-link" href="/user/login">Login</a>  </li>

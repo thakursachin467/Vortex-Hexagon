@@ -1,5 +1,6 @@
 const express= require('express');
 const router=express.Router();
+const {ensureAuthenticated,ensureAdmin} = require('../helpers/auth');
 
 // all categories starting with /admin/categories end up here
 
@@ -8,7 +9,7 @@ const router=express.Router();
 const categories= require('../models/category');
 
 //get all categories page
-router.get('/',(req,res)=>{
+router.get('/',ensureAdmin,(req,res)=>{
     categories.find({})
     .then((categories)=>{
       if(categories){
@@ -26,7 +27,7 @@ router.get('/',(req,res)=>{
 });
 
 //get add categories
-router.get('/add-category',(req,res)=>{
+router.get('/add-category',ensureAdmin,(req,res)=>{
     let title= "";
     res.render('admin/addcategory',{
       title:title
@@ -34,7 +35,7 @@ router.get('/add-category',(req,res)=>{
 });
 
 //add a category to the database
-router.post('/add-category',(req,res)=>{
+router.post('/add-category',ensureAdmin,(req,res)=>{
     categories.findOne({title:req.body.title})
     .then((category)=>{
           if(category) {
@@ -67,7 +68,7 @@ router.post('/add-category',(req,res)=>{
 });
 
 //load the edit page for categories
-router.get('/edit/:slug',(req,res)=>{
+router.get('/edit/:slug',ensureAdmin,(req,res)=>{
 
       categories.findOne({slug:req.params.slug})
       .then((category)=>{
@@ -78,7 +79,7 @@ router.get('/edit/:slug',(req,res)=>{
 });
 
 //submit the edit changes to the database
-router.post('/edit/:slug',(req,res)=>{
+router.post('/edit/:slug',ensureAdmin,(req,res)=>{
   categories.findOne({title:req.body.title})
   .then((category)=>{
         if(category) {
@@ -106,7 +107,7 @@ router.post('/edit/:slug',(req,res)=>{
 });
 
 //delete a category from database
-router.get('/delete/:id',(req,res)=>{
+router.get('/delete/:id',ensureAdmin,(req,res)=>{
         categories.findOneAndRemove({_id:req.params.id})
         .then(()=>{
           categories.find({})
