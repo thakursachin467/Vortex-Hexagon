@@ -12,15 +12,25 @@
          <ul class="navbar-nav mr-auto">
            <li class="nav-item ">
              <a class="nav-link" href="/admin/pages">Pages </a>
+             </li>
              <a class="nav-link" href="/admin/categories">Categories </a>
+             </li>
              <a class="nav-link" href="/admin/products">Products </a>
-           </li>
-
+             </li>
          </ul>
-         <form class="form-inline mt-2 mt-md-0">
-           <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-         </form>
+       </ul>
+       <ul class="navbar-nav mr-3">
+         {{#if user}}
+             <li class="nav-item"> <a class="nav-link" href="/user/logout">Logout</a>  </li>
+         {{else}}
+         <li  class="nav-item"> <a  class="nav-link" href="/user/register">Register</a>  </li>
+         <li class="nav-item"> <a class="nav-link" href="/user/login">Login</a>  </li>
+         {{/if}}
+       </ul>
+       <form class="form-inline mt-2 mt-md-0">
+
+         <input class="form-control mr-sm-2" type="search" placeholder="Search" name="search" aria-label="Search">
+       </form>
        </div>
      </nav>
    </header>

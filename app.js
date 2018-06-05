@@ -10,13 +10,15 @@ const admincategories= require('./routes/admin_categories');
 const adminproducts= require('./routes/admin_products');
 const products= require('./routes/products');
 const cart= require('./routes/cart');
+const user= require('./routes/user');
 const flash = require('connect-flash');
 const path = require('path');
 const {check,truncate,striptag,checkarray,Subtotal,total,currency,inc}= require('./helpers/hbs');
 const fileUpload= require('express-fileupload');
 const pagemodel= require('./models/page');
 const categorymodel= require('./models/category');
-
+const passport = require('passport');
+const pasportConfig= require('./config/passport');
 
 var app= express();
 var port= process.env.PORT || 3000;
@@ -53,6 +55,10 @@ app.use(bodyParser.json());
 
 app.use(flash());
 
+//passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
 pagemodel.find({})
 .sort({sorting:1})
 .then((page)=>{
@@ -72,6 +78,7 @@ categorymodel.find({})
     res.locals.error= req.flash('error');
     res.locals.userid=req.user || null;
     res.locals.cart= req.session.cart;
+    res.locals.user= req.user || null;
       next();
 
 });
@@ -95,6 +102,11 @@ app.use('/products',products);
 //all routes to  cart start here
 app.use('/cart',cart);
 
+//all user login and logout resides Here
+app.use('/user',user);
+
+//to config our local Strategy with the login
+pasportConfig(passport);
 
 app.get('*', function(req,res,next){
   res.status(404).render('admin/error');

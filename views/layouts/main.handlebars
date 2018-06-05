@@ -33,7 +33,11 @@ min-height: 61vh;
   </head>
   <body>
     <!-- header starts here -->
+    {{#if (check user.admin true)}}
+          {{> _adminheader}}
+    {{else}}
       {{> _header}}
+      {{/if}}
       {{> _errors}}
       {{> _sucess}}
       <!--all the main content goes here -->
@@ -43,7 +47,9 @@ min-height: 61vh;
       </main>
 
       <!-- footer starts here -->
+
       {{> _footer}}
+    
 
 
 

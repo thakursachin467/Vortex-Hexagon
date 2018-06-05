@@ -1,0 +1,60 @@
+<div class="container Content">
+    <div class="row">
+      <div class="col-md-3">
+          {{> _sidebar}}
+      </div>
+      <div class="col-md-1">
+
+      </div>
+        <div class="col-md-8 col-xs-12 ">
+          <form class="mt-3" action="/user/register" method="post">
+
+            <div class="col-lg-12">
+                <div class="form-group">
+                    <label for="InputName">Enter Name</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="name" id="InputName" placeholder="Enter Name" value="{{name}}" required>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="InputEmail">Enter Email</label>
+                    <div class="input-group">
+                        <input type="email" class="form-control" id="InputEmailFirst" name="email" value="{{email}}" placeholder="Enter Email" required>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="InputEmail">Confirm Email</label>
+                    <div class="input-group">
+                        <input type="email" class="form-control" id="InputEmailSecond" name="email1" value="{{email1}}" placeholder="Confirm Email" required>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="InputEmail">Enter Password</label>
+                    <div class="input-group">
+                        <input type="password" class="form-control" id="InputEmailFirst" name="password" value="{{password}}" placeholder="Enter Password" required>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="InputEmail">Confirm Password</label>
+                    <div class="input-group">
+                        <input type="password" class="form-control" id="InputEmailFirst" name="password1" value="{{password1}}" placeholder="Enter Password" required>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="InputEmail">Admin Code(if any)</label>
+                    <div class="input-group">
+                        <input type="password" class="form-control" id="InputEmailFirst" name="admin" value="{{admin}}" placeholder="Enter Admin code" >
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+                    </div>
+                </div>
+                <input type="submit" name="submit" id="submit" value="Register" class="btn btn-info float-right">
+            </div>
+            </form>
+            </div>
+    </div>
+</div>
