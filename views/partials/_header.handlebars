@@ -42,28 +42,20 @@
              {{/each}}
            </ul>
            <ul class="navbar-nav mr-3">
-             <li class="nav-item ">
-               <a class="nav-link" href="/cart/checkout">Cart ({{#if (checkarray cart)}}
-                {{cart.length}}
-                  {{else}}
-                0
-                  {{/if}})
-               </a>
-             </li>
              {{#if user}}
              <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Welcome,{{user.name}}
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <li class="nav-item ">
-            <a class="nav-link" href="/cart/checkout">Cart ({{#if (checkarray cart)}}
+
+            <a class="dropdown-item" href="/cart/checkout">Cart ({{#if (checkarray cart)}}
              {{cart.length}}
                {{else}}
              0
                {{/if}})
             </a>
-          </li>
+
           {{#each pages}}
           {{#if (check slug "home")}}
 

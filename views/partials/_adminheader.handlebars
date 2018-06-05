@@ -37,11 +37,19 @@
 
             <a class="dropdown-item" href="/admin/products">Products </a>
 
+              <a class="dropdown-item" href="/cart/checkout">Cart ({{#if (checkarray cart)}}
+               {{cart.length}}
+                 {{else}}
+               0
+                 {{/if}})
+              </a>
+
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="/user/logout">Logout</a>
         </div>
       </li>
          {{else}}
+
          <li  class="nav-item"> <a  class="nav-link" href="/user/register">Register</a>  </li>
          <li class="nav-item"> <a class="nav-link" href="/user/login">Login</a>  </li>
          {{/if}}

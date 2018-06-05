@@ -6,12 +6,21 @@ const categorymodel= require('../models/category');
 
 router.get('/',(req,res)=>{
 
-
+  pages.findOne({slug:'home'})
+  .then((page)=>{
+        if(page){
           categorymodel.find({})
           .then((category)=>{
-            res.render('home');
+            res.render('home',{
+              title:page.title,
+              content:page.content
+            });
             req.app.locals.category=category;
           });
+        }
+
+  });
+
 
 
   });
