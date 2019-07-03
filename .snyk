@@ -6,3 +6,18 @@ patch:
   'npm:extend:20180424':
     - resize-img > jimp > request > extend:
         patched: '2019-06-18T12:53:25.027Z'
+  SNYK-JS-LODASH-450202:
+    - express-validator > lodash:
+        patched: '2019-07-03T23:03:10.439Z'
+    - snyk > lodash:
+        patched: '2019-07-03T23:03:10.439Z'
+    - snyk > inquirer > lodash:
+        patched: '2019-07-03T23:03:10.439Z'
+    - snyk > snyk-config > lodash:
+        patched: '2019-07-03T23:03:10.439Z'
+    - snyk > snyk-mvn-plugin > lodash:
+        patched: '2019-07-03T23:03:10.439Z'
+    - snyk > snyk-nodejs-lockfile-parser > lodash:
+        patched: '2019-07-03T23:03:10.439Z'
+    - snyk > snyk-php-plugin > @snyk/composer-lockfile-parser > lodash:
+        patched: '2019-07-03T23:03:10.439Z'
