@@ -29,7 +29,7 @@
     "express-fileupload": "^1.1.6",
     "express-handlebars": "^3.0.0",
     "express-session": "^1.15.6",
-    "express-validator": "^6.0.0",
+    "express-validator": "^6.5.0",
     "fs-extra": "^6.0.1",
     "mkdirp": "^0.5.1",
     "mongoose": "^5.7.5",
