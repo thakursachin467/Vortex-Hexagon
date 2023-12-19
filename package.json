@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/thakursachin467/Vortex-Hexagon#readme",
   "dependencies": {
-    "bcrypt": "^2.0.1",
+    "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "connect-flash": "^0.1.1",
@@ -35,8 +35,8 @@
     "mongoose": "^5.7.5",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
-    "resize-img": "^1.1.2",
-    "snyk": "^1.290.1"
+    "resize-img": "^2.0.0",
+    "snyk": "^1.996.0"
   },
   "devDependencies": {
     "mongodb-driver": "^0.1.0"
